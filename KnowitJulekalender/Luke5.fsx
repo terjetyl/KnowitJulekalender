@@ -3,13 +3,13 @@
 // For å dekryptere meldingen må man først legge sammen parene i listen, ett par er første og siste element, andre og nest siste element og så videre. Når du har alle verdiene kan du oversette disse til bokstaver, hvor a = 1 og z = 26.
 // Kryptertmelding: http://pastebin.com/xfX3msCL
 
-#r @"C:\Users\G018343\Documents\Visual Studio 2015\Projects\KnowitJulekalender\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll"
-#load "Helpers.fs"
+#r @"..\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll"
+#load "File.fs"
 
 open System
 
 let uri = new Uri("http://pastebin.com/raw/xfX3msCL");
-let file = FileHelper.loadFromUrl uri
+let file = File.download uri
 
 let romanToNumber roman =
     match roman with
