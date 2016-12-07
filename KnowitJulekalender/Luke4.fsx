@@ -24,6 +24,7 @@ let rec replaceSevens numbers =
         numbers
     else 
         let existInSevens num = sevens |> Seq.exists (fun x -> num = x)
+
         numbers |> Seq.map (fun n -> if existInSevens n then 
                                         counter <- counter + 1
                                         counter

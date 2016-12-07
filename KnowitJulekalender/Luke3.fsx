@@ -1,6 +1,9 @@
-﻿#r @"..\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll"
+﻿
+#r @"..\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll"
+#load "File.fs"
 
-open FSharp.Data
+let uri = new System.Uri("http://pastebin.com/raw/e0bE4naA");
+let file = File.download uri
 
 type RelationshipType = 
     | Friends
@@ -9,8 +12,6 @@ type RelationshipType =
 type Relationship = { Type: RelationshipType; Name1: string; Name2: string; Cameleon: string }
 let createRelationShip t name1 name2 cameleon = 
     { Type = t; Name1 = name1; Name2 = name2; Cameleon = cameleon }
-
-let file = Http.RequestString "http://pastebin.com/raw/e0bE4naA"
 
 let removeExcessWhitespace str = 
     let trimmer = new System.Text.RegularExpressions.Regex(@"\s\s+");
