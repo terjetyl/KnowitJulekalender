@@ -63,6 +63,8 @@
     <None Include="Luke3.fsx" />
     <None Include="Luke5.fsx" />
     <Content Include="packages.config" />
+    <Content Include="Luke6.js" />
+    <None Include="Luke7.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
