@@ -16,43 +16,37 @@
 // Skattekart: http://pastebin.com/BZrAMcN2
 
 #r @"..\packages\FSharp.Data.2.3.2\lib\net40\FSharp.Data.dll"
+#load "File.fs"
 
-open FSharp.Data
+let file = File.download (System.Uri("http://pastebin.com/raw/BZrAMcN2"))
 
-let file = Http.RequestString "http://pastebin.com/raw/BZrAMcN2"
+type Directions =  W | E | S | N
 
-type Direction = 
-    | W
-    | E
-    | S
-    | N
-
-type Line = { Direction: Direction; Distance: int }
+type Step = { Direction: Directions; Distance: int }
 
 let translateDirection direction = 
     match direction with
-    | "south" -> Direction.S
-    | "east" -> Direction.E
-    | "north" -> Direction.N
-    | "west" -> Direction.W
+    | "south" -> Directions.S
+    | "east" -> Directions.E
+    | "north" -> Directions.N
+    | "west" -> Directions.W
     | _ -> failwith "Should not happen"
 
-let createLine direction distance = 
+let createStep direction distance = 
     { Direction = (translateDirection direction); Distance = (int)distance }
 
-let lines = file.Split('\n') 
-            |> Seq.map (fun x -> x.Trim()) 
-            |> Seq.map (fun x -> x.Split(' '))
-            |> Seq.map (fun x -> createLine x.[3] x.[1])
-            |> Seq.toList
+let parsedLines = file.Split('\n') 
+                    |> Seq.map (fun x -> x.Trim()) 
+                    |> Seq.map (fun x -> x.Split(' '))
+                    |> Seq.map (fun x -> createStep x.[3] x.[1])
+                    |> Seq.toList
 
 let getDistance line =
     match line.Direction with
-    | Direction.E -> -line.Distance
-    | Direction.S -> -line.Distance
+    | (Directions.E | Directions.S) -> -line.Distance
     | _ -> line.Distance
 
 let distance = 
-    let distNorthSouth = lines |> Seq.filter (fun x -> x.Direction = Direction.N || x.Direction = Direction.S) |> Seq.sumBy (fun x -> getDistance x)
-    let distEastWest = lines |> Seq.filter (fun x -> x.Direction = Direction.E || x.Direction = Direction.W) |> Seq.sumBy (fun x -> getDistance x)
+    let distNorthSouth = parsedLines |> Seq.filter (fun x -> x.Direction = Directions.N || x.Direction = Directions.S) |> Seq.sumBy (fun x -> getDistance x)
+    let distEastWest = parsedLines |> Seq.filter (fun x -> x.Direction = Directions.E || x.Direction = Directions.W) |> Seq.sumBy (fun x -> getDistance x)
     (distNorthSouth, distEastWest)

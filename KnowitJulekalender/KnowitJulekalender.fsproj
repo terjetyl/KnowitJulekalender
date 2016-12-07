@@ -65,6 +65,7 @@
     <Content Include="packages.config" />
     <Content Include="Luke6.js" />
     <None Include="Luke7.fsx" />
+    <Compile Include="File.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
