@@ -25,6 +25,8 @@ let parseLine (line: string) =
     | "friends" -> createRelationShip RelationshipType.Friends cols.[1] cols.[2] ""
     | _ -> createRelationShip RelationshipType.Hates cols.[0] cols.[2] ""
 
+let relationShips = lines |> Seq.map parseLine |> Seq.toList
+
 let findCameleon friendship haters =
     let person1hates = haters |> Seq.exists (fun x -> friendship.Name1 = x.Name1 && friendship.Name2 = x.Name2)
     let person2hates = haters |> Seq.exists (fun x -> friendship.Name2 = x.Name1 && friendship.Name1 = x.Name2)
@@ -34,9 +36,6 @@ let findCameleon friendship haters =
         friendship.Name1
     else
         friendship.Name2
-
-
-let relationShips = lines |> Seq.map parseLine |> Seq.toList
 
 let haters = relationShips |> Seq.filter (fun x -> x.Type = RelationshipType.Hates) |> Seq.toList
 let friends = relationShips |> Seq.filter (fun x -> x.Type = RelationshipType.Friends) |> Seq.toList
