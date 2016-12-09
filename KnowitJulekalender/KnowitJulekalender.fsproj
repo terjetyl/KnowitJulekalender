@@ -67,6 +67,7 @@
     <None Include="Luke7.fsx" />
     <Compile Include="File.fs" />
     <None Include="Luke8.fsx" />
+    <None Include="Luke9.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
